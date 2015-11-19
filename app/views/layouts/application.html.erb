@@ -1,0 +1,34 @@
+<% action = (current_user ? session_url : new_session_url) %>
+<% method = (current_user ? :delete : :get) %>
+<% button_text = (current_user ? "Logout" : "Login") %>
+<% username = (current_user ? current_user.user_name : "") %>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NinetyNineCatsDay1</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+
+
+</head>
+<body>
+  <h3> <%= username %> </h3>
+
+
+  <form action= "<%= action %>" method= "post" >
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>" >
+    <input type="hidden" name="_method" value="<%= method %>">
+      <input type="submit" name="name" value= <%=button_text%> >
+  </form>
+
+<%= link_to("Create User", new_user_url) unless current_user%>
+<%= link_to("Create New Rental Request", new_cat_rental_request_url) if current_user%>
+
+
+<%= yield %>
+
+</body>
+</html>
